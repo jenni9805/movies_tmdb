@@ -8,16 +8,16 @@ class MoviesObject {
   static const String dbBackdropPath = 'backdrop_path';
   static const String dbOverview = 'overview';
   static const String dbReleaseDate = 'release_date';
-  static const String dbGenredIds = 'genre_ids';
+  static const String dbGenreIds = 'genre_ids';
 
   final int id;
   final double voteAverage;
   final String title;
   final String posterPath;
   final String backdropPath;
-  final String overvierw;
+  final String overview;
   final String releaseDate;
-  final List<dynamic> genredIds;
+  final List<dynamic> genreIds;
 
   MoviesObject({
     required this.id,
@@ -25,9 +25,9 @@ class MoviesObject {
     required this.title,
     required this.posterPath,
     required this.backdropPath,
-    required this.overvierw,
+    required this.overview,
     required this.releaseDate,
-    required this.genredIds,
+    required this.genreIds,
   });
 
   String getPosterUrl() => getMediumPicturePoster(posterPath);
@@ -48,9 +48,9 @@ class MoviesObject {
         title: json[dbTitle] ?? '',
         posterPath: json[dbPosterPath] ?? '',
         backdropPath: json[dbBackdropPath] ?? '',
-        overvierw: json[dbOverview] ?? '',
+        overview: json[dbOverview] ?? '',
         releaseDate: json[dbReleaseDate] ?? '',
-        genredIds: json[dbGenredIds] ?? '',
+        genreIds: json[dbGenreIds] ?? '',
       );
 
   Map<String, dynamic> toJson() => {
@@ -59,8 +59,8 @@ class MoviesObject {
     dbTitle: title,
     dbPosterPath: posterPath,
     dbBackdropPath: backdropPath,
-    dbOverview: overvierw,
+    dbOverview: overview,
     dbReleaseDate: releaseDate,
-    dbGenredIds: genredIds
+    dbGenreIds: genreIds
   };
 }

@@ -33,14 +33,10 @@ class MoviePopularPage extends StatelessWidget {
             child: ListView.builder(
               itemCount: list.length,
               scrollDirection: Axis.horizontal,
-
               itemBuilder: (_, index) {
                 final movie = list[index];
                 return Consumer<NavigationNotifier>(
                   builder: (_, notifier, __) {
-
-
-
                     int position = notifier.currentPosition;
                     position = index;
                     return CardGeneral(

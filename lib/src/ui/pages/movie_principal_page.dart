@@ -29,11 +29,11 @@ class MoviePrincipalPage extends StatelessWidget {
           },
         ),
       ],
-      child: _builBody(),
+      child: _buildBody(),
     );
   }
 
-  Widget _builBody() {
+  Widget _buildBody() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,

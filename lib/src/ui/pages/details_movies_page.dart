@@ -62,7 +62,7 @@ class DetailsMoviesPage extends StatelessWidget {
                       duration: 'Estreno: ${movies.releaseDate}',
                     ),
                     OverviewDetails(
-                      overview: movies.overvierw,
+                      overview: movies.overview,
                     ),
                   ],
                 ),
