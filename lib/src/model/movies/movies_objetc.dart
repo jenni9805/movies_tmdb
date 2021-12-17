@@ -12,7 +12,7 @@ class MoviesObject {
 
   final int id;
   final double voteAverage;
-  final String title;
+  late final String title;
   final String posterPath;
   final String backdropPath;
   final String overview;

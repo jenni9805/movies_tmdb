@@ -2,15 +2,49 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
+import 'package:firebase_auth/firebase_auth.dart';
+
+//resources
+import 'package:movies_v2/src/resources/colors.dart';
+
 //Notifiers
+import 'package:movies_v2/src/notifiers/login_notifier.dart';
 import 'package:movies_v2/src/notifiers/navigation_notifier.dart';
 
 //Widgets
+import 'package:movies_v2/src/bloc/movies/movie_search_bloc.dart';
 import 'package:movies_v2/src/ui/pages/movie_principal_page.dart';
 import 'package:movies_v2/src/ui/pages/series_principal_page.dart';
+import 'package:movies_v2/src/ui/screens/search_screen.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final _auth = FirebaseAuth.instance;
+  late User loggedinUser;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getCurrentUser();
+  }
+
+  void getCurrentUser() async {
+    try {
+      final user = await _auth.currentUser;
+      if (user != null) {
+        loggedinUser = user;
+      }
+    } catch (e) {
+      print('Exception: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,16 +53,29 @@ class HomeScreen extends StatelessWidget {
         ChangeNotifierProvider<NavigationNotifier>(
           create: (_) => NavigationNotifier(),
         ),
+        Provider<MovieSearchBloc>(
+          create: (_) {
+            final bloc = MovieSearchBloc();
+            bloc.getPopular(query: 'spiderman');
+            return bloc;
+          },
+        )
       ],
-      child: _buildNavigation(),
+      child: _buildNavigation(context: context),
     );
   }
 
-  Widget _buildNavigation() {
+  Widget _buildNavigation({required BuildContext context}) {
     List<Widget> _widgetOptions = <Widget>[
       const MoviePrincipalPage(),
       const SeriesPrincipalPage(),
     ];
+
+    var stateLogin = Provider.of<LoginNotifier>(
+      context,
+      listen: false,
+    );
+
     return Consumer<NavigationNotifier>(
       builder: (_, notifier, __) {
         int _selectIndex = notifier.currentPosition;
@@ -37,7 +84,23 @@ class HomeScreen extends StatelessWidget {
             title: notifier.currentPosition == 0
                 ? const Text('Peliculas')
                 : const Text('Series'),
-            backgroundColor: Colors.blue,
+            backgroundColor: WlColors.two,
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.search),
+                onPressed: () => showSearch(
+                  context: context,
+                  delegate: SearchScreen(),
+                ),
+              ),
+              IconButton(
+                icon: const Icon(Icons.login),
+                onPressed: () {
+                  _auth.signOut();
+                  stateLogin.logout();
+                },
+              )
+            ],
           ),
           body: Center(
             child: _widgetOptions.elementAt(_selectIndex),
@@ -46,7 +109,7 @@ class HomeScreen extends StatelessWidget {
             items: const [
               BottomNavigationBarItem(
                 icon: Icon(Icons.movie),
-                label: 'Peliculas',
+                label: 'Películas',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.tv),
@@ -54,7 +117,7 @@ class HomeScreen extends StatelessWidget {
               ),
             ],
             currentIndex: _selectIndex,
-            selectedItemColor: Colors.blue,
+            selectedItemColor: WlColors.two,
             onTap: (index) {
               notifier.change(index);
             },

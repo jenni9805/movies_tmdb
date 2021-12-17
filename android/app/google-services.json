@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "837190407572",
+    "project_id": "movieswithloginflutter",
+    "storage_bucket": "movieswithloginflutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:837190407572:android:d214864f2514a7bcf26b81",
+        "android_client_info": {
+          "package_name": "com.example.movies_v2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "837190407572-3enhuqlavkujp44tvtn36338varm8p42.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDKw26I3rRQKZDcLGbQIfW8BeFp2gdSi5o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "837190407572-3enhuqlavkujp44tvtn36338varm8p42.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
