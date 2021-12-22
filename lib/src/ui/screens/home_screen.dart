@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movies_v2/src/ui/screens/login_screen.dart';
 
 import 'package:provider/provider.dart';
 
@@ -35,10 +36,13 @@ class _HomeScreenState extends State<HomeScreen> {
     getCurrentUser();
   }
 
-  void getCurrentUser() async {
+  void getCurrentUser()  {
     try {
-      final user = await _auth.currentUser;
-      if (user != null) {
+      final user =  _auth.currentUser;
+
+      if (user == null) {
+        LoginScreen();
+      }else{
         loggedinUser = user;
       }
     } catch (e) {
@@ -53,13 +57,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ChangeNotifierProvider<NavigationNotifier>(
           create: (_) => NavigationNotifier(),
         ),
-        Provider<MovieSearchBloc>(
-          create: (_) {
-            final bloc = MovieSearchBloc();
-            bloc.getPopular(query: 'spiderman');
-            return bloc;
-          },
-        )
       ],
       child: _buildNavigation(context: context),
     );

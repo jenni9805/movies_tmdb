@@ -42,6 +42,8 @@ dependencies:
   video_player: ^2.1.5
   firebase_core: ^1.10.6
   firebase_auth: ^3.3.3
+  mockito: ^5.0.17
+  http: ^0.13.4
 
 dev_dependencies:
   flutter_test:

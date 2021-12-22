@@ -31,39 +31,38 @@ class SearchScreen extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    return Center(
-      child: Container(
-        height: 30,
-        width: double.infinity,
-        color: Colors.red,
-        child: const Text('Sin resultados'),
+    return MultiProvider(
+      providers: [
+        Provider<MovieSearchBloc>(
+          create: (_) {
+            final bloc = MovieSearchBloc();
+            bloc.getPopular(query: query);
+            return bloc;
+          },
+        ),
+      ],
+      child: StreamBuilder<List<MoviesObject>>(
+        stream: MovieSearchBloc().searchStream,
+        builder: (_, snapshot) {
+          if (snapshot.data == null) {
+            return _emptyContainer();
+          } else {
+            final list = snapshot.data ?? [];
+            return ListView.builder(
+              itemCount: list.length,
+              itemBuilder: (_, int index) => _MovieItem(
+                movie: list[index],
+              ),
+            );
+          }
+        },
       ),
     );
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-
-
-    final search = Provider.of<MovieSearchBloc>(context, listen: false);
-
-
-    return StreamBuilder<List<MoviesObject>>(
-      stream: search.searchStream,
-      builder: (_, snapshot) {
-        if (snapshot.data == null) {
-          return _emptyContainer();
-        } else {
-          final list = snapshot.data ?? [];
-          return ListView.builder(
-            itemCount: list.length,
-            itemBuilder: (_, int index) => _MovieItem(
-              movie: list[index],
-            ),
-          );
-        }
-      },
-    );
+    return _emptyContainer();
   }
 
   Widget _emptyContainer() {
@@ -84,7 +83,6 @@ class _MovieItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return ListTile(
       leading: Hero(
         tag: movie.id,

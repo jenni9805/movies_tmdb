@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:movies_v2/src/model/login/validation.dart';
 import 'package:movies_v2/src/resources/colors.dart';
 import 'package:movies_v2/src/ui/routes.dart';
 import 'package:movies_v2/src/ui/widgets/background_login.dart';
@@ -48,6 +49,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     hintText: 'Enter your Email',
                     obscureText: false,
                     icon: Icons.email,
+                    validator: Validation.validateEmail(email),
                     onChanged: (value) => email = value,
                   ),
                   const SizedBox(height: 30.0),
@@ -56,6 +58,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     hintText: 'Enter your Password',
                     obscureText: true,
                     icon: Icons.vpn_key,
+                    validator: Validation.validatePassword(password),
                     onChanged: (value) => password = value,
                   ),
                   const SizedBox(height: 30),

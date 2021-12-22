@@ -11,6 +11,7 @@ class MoviesSearchDataSource {
   }) {
     final baseUrl =
         '${_dataSource.baseUrl}${_dataSource.getJson(url: '/3/search/movie')}&query=$query';
+    print(baseUrl);
     return _dio.get(baseUrl).then(
           (value) => MoviesObject.toList(
             json: value.data['results'],

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:movies_v2/src/model/login/validation.dart';
 import 'package:movies_v2/src/notifiers/login_notifier.dart';
 import 'package:movies_v2/src/notifiers/remember_notifier.dart';
 import 'package:movies_v2/src/resources/colors.dart';
@@ -32,8 +33,8 @@ class LoginScreen extends StatelessWidget {
     );
 
     bool _rememberMe = false;
-    late String email;
-    late String password;
+    late String email = '';
+    late String password = '';
 
     return Scaffold(
       body: FutureBuilder(
@@ -67,6 +68,7 @@ class LoginScreen extends StatelessWidget {
                           hintText: 'Enter your Email',
                           obscureText: false,
                           icon: Icons.email,
+                          validator: Validation.validateEmail(email),
                           onChanged: (value) => email = value,
                         ),
                         const SizedBox(height: 20),
@@ -75,6 +77,7 @@ class LoginScreen extends StatelessWidget {
                           hintText: 'Enter your Password',
                           obscureText: true,
                           icon: Icons.vpn_key,
+                          validator:  Validation.validatePassword(password),
                           onChanged: (value) => password = value,
                         ),
                         _buildForgotPasswordBtn(),
@@ -84,13 +87,14 @@ class LoginScreen extends StatelessWidget {
                         BtnLogin(
                           title: 'LOGIN',
                           onPressed: () {
-                            stateLogin.login();
                             final _auth = FirebaseAuth.instance;
                             final user = _auth.signInWithEmailAndPassword(
                               email: email,
                               password: password,
                             );
-                            if(user != null){
+                            if(user == null){
+                              print('agrega datos');
+                            }else{
                               stateLogin.login();
                             }
                           },

@@ -8,6 +8,7 @@ class TextFieldLogin extends StatelessWidget {
   final bool obscureText;
   final IconData icon;
   final Function(String value) onChanged;
+  final validator;
 
   const TextFieldLogin({
     Key? key,
@@ -16,6 +17,7 @@ class TextFieldLogin extends StatelessWidget {
     required this.obscureText,
     required this.icon,
     required this.onChanged,
+    required this.validator,
   }) : super(key: key);
 
   @override
@@ -32,7 +34,7 @@ class TextFieldLogin extends StatelessWidget {
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
           height: 60.0,
-          child: TextField(
+          child: TextFormField(
             keyboardType: TextInputType.emailAddress,
             obscureText: obscureText,
             style: const TextStyle(
@@ -49,6 +51,7 @@ class TextFieldLogin extends StatelessWidget {
               hintText: hintText,
               hintStyle: kHintTextStyle,
             ),
+            validator: (validator){},
             onChanged: onChanged,
           ),
         )
