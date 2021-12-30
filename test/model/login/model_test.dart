@@ -26,7 +26,7 @@ void main() {
 
 //test con mapeo para recibir todos los campos
   test('Test 2', () {
-    final file = File('test/test_resources/random_user.json')
+    final file = File('test/test_resources/example/random_user.json')
         .readAsStringSync();
 
     final user = UserModel.fromJson(jsonDecode(file) as Map<String, dynamic>);
@@ -44,7 +44,7 @@ void main() {
 
 //test con mapeo que recibe nulos
   test('Test 3', () {
-    final file = File('test/test_resources/random_user.json')
+    final file = File('test/test_resources/example/random_user.json')
         .readAsStringSync();
 
     final user = UserModel.fromJson(jsonDecode(file) as Map<String, dynamic>);
@@ -70,7 +70,7 @@ void main() {
           .toString()
           .startsWith('https://jsonplaceholder.typicode.com/posts/')) {
         return http.Response(
-            File('test/test_resources/random_user.json').readAsStringSync(),
+            File('test/test_resources/example/random_user.json').readAsStringSync(),
             200,
             headers: {
               HttpHeaders.contentTypeHeader: 'application/json',
